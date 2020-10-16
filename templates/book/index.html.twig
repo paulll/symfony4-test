@@ -23,7 +23,7 @@
                 <td>{{ book.title }}</td>
                 <td>{{ book.description }}</td>
                 <td>{{ book.year }}</td>
-                <td>{{ book.cover }}</td>
+                <td><img height="200px" src="{{ asset('uploads/covers/' ~ book.cover) }}" /></td>
                 <td>
                     <a href="{{ path('book_show', {'id': book.id}) }}">show</a>
                     <a href="{{ path('book_edit', {'id': book.id}) }}">edit</a>
