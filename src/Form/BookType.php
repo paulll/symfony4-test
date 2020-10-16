@@ -6,6 +6,8 @@ use App\Entity\Book;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class BookType extends AbstractType
 {
@@ -15,7 +17,22 @@ class BookType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('year')
-            ->add('cover')
+            ->add('cover', FileType::class, [
+                'label' => 'Cover image',
+
+                // unmapped means that this field is not associated to any entity property
+                'mapped' => false,
+
+                // make it optional so you don't have to re-upload the PDF file
+                // every time you edit the Product details
+                'required' => $options['require_cover'],
+
+                // unmapped fields can't define their validation using annotations
+                // in the associated entity, so you can use the PHP constraint classes
+                'constraints' => [
+                    new Image([])
+                ],
+            ])
             ->add('authors')
         ;
     }
@@ -24,6 +41,9 @@ class BookType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Book::class,
+            'require_cover' => false
         ]);
+
+        $resolver->setAllowedTypes('require_cover', 'bool');
     }
 }
