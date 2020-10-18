@@ -5,15 +5,15 @@
 {% block body %}
     <h1>Book index</h1>
 
-    <table class="table">
+    <table class="table" id="books">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>#</th>
                 <th>Title</th>
                 <th>Description</th>
                 <th>Year</th>
-                <th>Cover</th>
-                <th>actions</th>
+                <th>Cover image</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -25,8 +25,8 @@
                 <td>{{ book.year }}</td>
                 <td><img height="200px" src="{{ asset('uploads/covers/' ~ book.cover) }}" /></td>
                 <td>
-                    <a href="{{ path('book_show', {'id': book.id}) }}">show</a>
-                    <a href="{{ path('book_edit', {'id': book.id}) }}">edit</a>
+                    <a class="btn btn-success" role="button" href="{{ path('book_show', {'id': book.id}) }}">View</a>
+                    <a class="btn btn-primary" role="button" href="{{ path('book_edit', {'id': book.id}) }}">Edit</a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +37,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('book_new') }}">Create new</a>
+    <a class="btn btn-primary" role="button" href="{{ path('book_new') }}">Create new</a>
 {% endblock %}

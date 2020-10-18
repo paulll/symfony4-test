@@ -2,12 +2,16 @@
 
 {% block title %}Edit Book{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/form-edit.css">
+{% endblock %}
+
 {% block body %}
     <h1>Edit Book</h1>
 
     {{ include('book/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('book_index') }}">back to list</a>
-
     {{ include('book/_delete_form.html.twig') }}
+    
+    <a class="btn btn-secondary" role="button" href="{{ path('book_index') }}">Cancel</a>
 {% endblock %}
