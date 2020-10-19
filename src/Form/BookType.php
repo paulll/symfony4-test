@@ -41,7 +41,8 @@ class BookType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Book::class,
-            'require_cover' => false
+            'require_cover' => false,
+            'csrf_token_id'   => 'book',
         ]);
 
         $resolver->setAllowedTypes('require_cover', 'bool');

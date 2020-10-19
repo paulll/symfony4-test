@@ -1,0 +1,43 @@
+.td > input:not(:focus), .td > textarea:not(:focus) {
+	position: absolute;
+	width: 0;
+	height: 0;
+	padding: 0;
+	margin: 0;
+	outline: none;
+	border: 0;
+	opacity: 0;
+	overflow: hidden;
+}
+
+.td > input:focus + label, .td > textarea:focus + label {
+	display: none;
+}
+
+label {
+	cursor: pointer;
+}
+
+.td, .th {
+	display: table-cell;
+	padding: .75rem;
+}
+
+.th {
+	font-weight: bold;
+	vertical-align: bottom;
+	border-top: 1px solid #dee2e6;
+	border-bottom: 2px solid #dee2e6;
+}
+
+.td {
+	vertical-align: top;
+}
+
+.tr {
+	display: table-row;
+}
+
+.table {
+	display: table;
+}
