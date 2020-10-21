@@ -3,11 +3,14 @@
 namespace App\Form;
 
 use App\Entity\Book;
+use App\Entity\Author;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class BookType extends AbstractType
 {
@@ -33,8 +36,7 @@ class BookType extends AbstractType
                     new Image([])
                 ],
             ])
-            ->add('authors')
-        ;
+            ->add('authors');
     }
 
     public function configureOptions(OptionsResolver $resolver)
