@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Route("/book")
@@ -88,13 +89,36 @@ class BookController extends AbstractController
      */
     public function edit(Request $request, Book $book): Response
     {
+
+        // << Many-to-many mappedBy hack
+        $authorsOriginal = new ArrayCollection();
+        foreach ($book->getAuthors() as $author) {
+            $authorsOriginal->add($author);
+        }
+        // >> Many-to-many mappedBy hack
+
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $coverFile */
             $coverFile = $form->get('cover')->getData();
+            $em = $this->getDoctrine()->getManager();
             
+            // << Many-to-many mappedBy hack
+            foreach ($authorsOriginal as $author) {
+                if (!$book->getAuthors()->contains($author)) {
+                    $author->addBook($book);
+                    $em->persist($author);
+                }
+            }
+
+            foreach ($book->getAuthors() as $author) {
+                $author->addBook($book);
+                $em->persist($author);
+            }
+            // >> Many-to-many mappedBy hack
+
             if ($coverFile) {
                 $originalFilename = pathinfo($coverFile->getClientOriginalName(), PATHINFO_FILENAME);
                 
