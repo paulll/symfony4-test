@@ -20,8 +20,8 @@ final class AuthorAdmin extends AbstractAdmin
     {
         $formMapper->add('name', TextType::class);
         $formMapper->add('books',  CollectionType::class, [
-                'allow_add' => true,
-                'allow_delete' => true
+            'allow_add' => true,
+            'allow_delete' => true
         ]);
     }
 
