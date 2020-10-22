@@ -41,8 +41,8 @@
                     </label>
                 </div>
                 <div class="td">
-                    <a class="btn btn-success" role="button" href="{{ path('book_show', {'id': book.id}) }}">View</a>
-                    <a class="btn btn-primary" role="button" href="{{ path('book_edit', {'id': book.id}) }}">Edit</a>
+                    <a class="btn btn-sm btn-success" role="button" href="{{ path('book_show', {'id': book.id}) }}">View</a>
+                    <a class="btn btn-sm btn-primary" role="button" href="{{ path('book_edit', {'id': book.id}) }}">Edit</a>
                 </div>
                 <input type="hidden" name="book[_token]" value="{{ csrf_token('book') }}">
             </form>
@@ -54,7 +54,9 @@
     </div>
 
     <a class="btn btn-primary" role="button" href="{{ path('book_new') }}">Create new</a>
+    <a class="btn btn-warning" role="button" href="{{ path('book_new_random') }}">Create random</a>
     <a class="btn btn-secondary" role="button" href="{{ path('index') }}">Back</a>
+    <a class="btn btn-link" role="button" href="{{ path('book_more_than_two_authors') }}">Get where more 2 authors</a>
 {% endblock %}
 
 {% block javascripts %}

@@ -26,6 +26,28 @@ class AuthorController extends AbstractController
     }
 
     /**
+     * @Route("/new-random", name="author_new_random", methods={"GET"})
+     */
+    public function new_random(): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $first_names = array("Michael","Christopher","Jessica","Matthew","Ashley","Jennifer","Joshua","Amanda","Daniel","David","James","Robert","John","Joseph","Andrew","Ryan","Brandon","Jason");
+        $last_names = array("Shippy","Boyance","Deneui","Houltberg","Thurston","Parras","Macurdy","Ogborn","Lohrenz","Snellenberger","Lennihan","Luebbe","Spates","Lempicki","Chimilio","Harlan");
+
+        shuffle($first_names);
+        shuffle($last_names);
+
+        $author = new Author();
+        $author->setName($first_names[0] . " " . $last_names[0]); 
+
+        $entityManager->persist($author);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('author_index');
+    }
+
+    /**
      * @Route("/new", name="author_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response

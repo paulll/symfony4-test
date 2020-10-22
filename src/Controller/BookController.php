@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Form\BookType;
 use App\Repository\BookRepository;
+use App\Repository\AuthorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -36,6 +37,40 @@ class BookController extends AbstractController
         return $this->render('book/more_than_two_authors.html.twig', [
             'books' => $bookRepository->getWhereMoreThanTwoAuthors()
         ]);
+    }
+
+    /**
+     * @Route("/new-random", name="book_new_random", methods={"GET"})
+     */
+    public function new_random(AuthorRepository $authorRepository): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $words = array("the","minute","strong","special","mind","behind","clear","tail","produce","fact","street","inch","multiply","nothing","course","stay","wheel","full","force","blue","object","decide","surface","deep","moon","island","foot","system","busy","test","record","boat","common","gold","possible","plane","stead","dry","wonder","laugh","thousand","ago","ran","check","game","shape","equate","hot","miss","broug");
+
+        shuffle($words);
+
+        $book = new Book();
+        $book->setTitle(join("-", array_slice($words, 0, 3))); 
+        $book->setDescription(join(" ", array_slice($words, 4, 14)));
+        $book->setYear(rand(1800, 2020));
+        $book->setCover("generic_book.png");
+
+        
+        $authors = $authorRepository->findAll();
+        shuffle($authors);
+        $authors = array_slice($authors, 0, rand(0, 4));
+
+        foreach ($authors as $author) {
+            $book->addAuthor($author);
+            $author->addBook($book);
+            $entityManager->persist($author);
+        }
+
+        $entityManager->persist($book);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('book_index');
     }
 
     /**
