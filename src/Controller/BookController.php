@@ -54,22 +54,20 @@ class BookController extends AbstractController
             /** @var UploadedFile $coverFile */
             $coverFile = $form->get('cover')->getData();
             
-            if ($coverFile) {
-                $originalFilename = pathinfo($coverFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$coverFile->guessExtension();
+            $originalFilename = pathinfo($coverFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+            $newFilename = $safeFilename.'-'.uniqid().'.'.$coverFile->guessExtension();
 
-                try {
-                    $coverFile->move(
-                        $this->getParameter('covers_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-
-                $book->setCover($newFilename);
+            try {
+                $coverFile->move(
+                    $this->getParameter('covers_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
             }
+
+            $book->setCover($newFilename); 
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($book);
