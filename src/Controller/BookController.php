@@ -119,6 +119,7 @@ class BookController extends AbstractController
             }
             // >> Many-to-many mappedBy hack
 
+            // @todo: maybe should move this to the Entity\Book?  
             if ($coverFile) {
                 $originalFilename = pathinfo($coverFile->getClientOriginalName(), PATHINFO_FILENAME);
                 

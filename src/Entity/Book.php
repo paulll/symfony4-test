@@ -6,6 +6,7 @@ use App\Repository\BookRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass=BookRepository::class)
@@ -133,5 +134,56 @@ class Book
         }
 
         return $this;
+    }
+
+    /**
+     * Unmapped property to handle coverfile uploads
+     */
+    private $coverFile;
+
+    /**
+     * @param UploadedFile $coverFile
+     */
+    public function setCoverFile(UploadedFile $coverFile = null): self
+    {
+        $this->coverFile = $coverFile;
+        $this->upload();
+
+        return $this;
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    public function getCoverFile()
+    {
+        return $this->coverFile;
+    }
+
+    /**
+     * Manages the copying of the file to the relevant place on the server
+     */
+    public function upload()
+    {
+        if (null === $this->getCoverFile()) {
+            return;
+        }
+
+        $originalFilename = pathinfo($this->getCoverFile()->getClientOriginalName(), PATHINFO_FILENAME);
+        $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+        $newFilename = $safeFilename.'-'.uniqid().'.'.$this->getCoverFile()->guessExtension();
+
+
+        // move takes the target directory and target filename as params
+        $this->getCoverFile()->move(
+            'uploads/covers',
+            $newFilename
+        );
+
+        // set the path property to the filename where you've saved the file
+        $this->setCover($newFilename);
+
+        // clean up the file property as you won't need it anymore
+        $this->setCoverFile(null);
     }
 }

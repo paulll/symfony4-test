@@ -23,11 +23,10 @@ final class BookAdmin extends AbstractAdmin
         $formMapper->add('title', TextType::class);
         $formMapper->add('description', TextareaType::class);
         $formMapper->add('year', IntegerType::class); 
-        $formMapper->add('cover', TextType::class);
-        $formMapper->add('authors',  CollectionType::class, [
-                'allow_add' => true,
-                'allow_delete' => true
+        $formMapper->add('coverFile', FileType::class, [
+            'required' => false
         ]);
+        $formMapper->add('authors');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
