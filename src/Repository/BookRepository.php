@@ -19,6 +19,16 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
+    public function getWhereMoreThanTwoAuthors()
+    {
+        return $this->createQueryBuilder('b')
+            ->leftJoin('b.authors', 'a')
+            ->groupBy('b.id')
+            ->having('COUNT(b.id) > 2')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Book[] Returns an array of Book objects
     //  */

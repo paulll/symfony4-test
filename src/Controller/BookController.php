@@ -29,6 +29,16 @@ class BookController extends AbstractController
     }
 
     /**
+     * @Route("/more-than-two-authors", name="book_more_than_two_authors", methods={"GET"})
+     */
+    public function mtta(BookRepository $bookRepository): Response
+    {
+        return $this->render('book/more_than_two_authors.html.twig', [
+            'books' => $bookRepository->getWhereMoreThanTwoAuthors()
+        ]);
+    }
+
+    /**
      * @Route("/new", name="book_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response

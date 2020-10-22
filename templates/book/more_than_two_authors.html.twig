@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Books filtered{% endblock %}
+
+{% block body %}
+    <h1>Books with more than 2 authors</h1>
+
+    <table class="table" id="books">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Year</th>
+                <th>Cover image</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for book in books %}
+            <tr>
+                <td>{{ book.id }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.description }}</td>
+                <td>{{ book.year }}</td>
+                <td><img height="200px" src="{{ asset('uploads/covers/' ~ book.cover) }}" /></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-secondary" role="button" href="{{ path('book_index') }}">Back</a>
+{% endblock %}
