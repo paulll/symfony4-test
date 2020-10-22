@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Books DB{% endblock %}
+
+{% block body %}
+    <h1>Books DB</h1>
+    <a class="btn btn-link" role="button" href="{{ path('book_index') }}">View Books</a>
+    <a class="btn btn-link" role="button" href="{{ path('author_index') }}">View Authors</a>
+{% endblock %}
