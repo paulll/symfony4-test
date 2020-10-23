@@ -14,3 +14,8 @@ SQL query:
 ```
 select b.* from author_book left join book b on b.id=book_id group by book_id having count(author_id) > 2;
 ```
+
+Generating fake data:
+```
+php bin/console doctrine:fixtures:load
+```
