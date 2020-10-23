@@ -19,6 +19,22 @@
             <div class="th">Cover image</div>
             <div class="th">Actions</div>
         </div>
+        <form class="tr table-head" method="GET">
+            <div class="th"></div>
+            <div class="th">
+                <input name="title" type="text" class="form-control" placeholder="filter name..">
+            </div>
+            <div class="th">
+                <input name="description" type="text" class="form-control" placeholder="filter desc..">
+            </div>
+            <div class="th">
+                <input name="year" type="number" class="form-control" placeholder="filter year..">
+            </div>
+            <div class="th"></div>
+            <div class="th">
+                <input class="btn btn-sm btn-primary" type="submit" value="Filter" />
+            </div>
+        </form>
         {% for book in books %}
             <form class="tr" action="/book/{{ book.id }}/edit" method="POST" enctype="multipart/form-data">
                 <div class="td">{{ book.id }}</div>
