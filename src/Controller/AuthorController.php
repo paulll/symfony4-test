@@ -32,14 +32,14 @@ class AuthorController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
 
-        $first_names = array("Michael","Christopher","Jessica","Matthew","Ashley","Jennifer","Joshua","Amanda","Daniel","David","James","Robert","John","Joseph","Andrew","Ryan","Brandon","Jason");
-        $last_names = array("Shippy","Boyance","Deneui","Houltberg","Thurston","Parras","Macurdy","Ogborn","Lohrenz","Snellenberger","Lennihan","Luebbe","Spates","Lempicki","Chimilio","Harlan");
+        $firstNames = array("Michael","Christopher","Jessica","Matthew","Ashley","Jennifer","Joshua","Amanda","Daniel","David","James","Robert","John","Joseph","Andrew","Ryan","Brandon","Jason");
+        $lastNames = array("Shippy","Boyance","Deneui","Houltberg","Thurston","Parras","Macurdy","Ogborn","Lohrenz","Snellenberger","Lennihan","Luebbe","Spates","Lempicki","Chimilio","Harlan");
 
-        shuffle($first_names);
-        shuffle($last_names);
+        shuffle($firstNames);
+        shuffle($lastNames);
 
         $author = new Author();
-        $author->setName($first_names[0] . " " . $last_names[0]); 
+        $author->setName($firstNames[0] . " " . $lastNames[0]); 
 
         $entityManager->persist($author);
         $entityManager->flush();
