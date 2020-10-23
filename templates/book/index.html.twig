@@ -22,13 +22,13 @@
         <form class="tr table-head" method="GET">
             <div class="th"></div>
             <div class="th">
-                <input name="title" type="text" class="form-control" value="{{ filters.title }}" placeholder="filter name..">
+                <input name="title" type="text" class="form-control" value="{{ filters.title | default("") }}" placeholder="filter name..">
             </div>
             <div class="th">
-                <input name="description" type="text" class="form-control" value="{{ filters.description }}" placeholder="filter desc..">
+                <input name="description" type="text" class="form-control" value="{{ filters.description | default("") }}" placeholder="filter desc..">
             </div>
             <div class="th">
-                <input name="year" type="number" class="form-control" value="{{ filters.year }}" placeholder="filter year..">
+                <input name="year" type="number" class="form-control" value="{{ filters.year | default("") }}" placeholder="filter year..">
             </div>
             <div class="th"></div>
             <div class="th">
